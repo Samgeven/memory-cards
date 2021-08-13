@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useStore } from 'effector-react';
 import './App.css';
+import { $attempts, $gameOver } from './model/store';
+import { Playground } from './view/playground'
+import { ScoreScreen } from './view/scoreScreen'
 
 function App() {
+  const attempts = useStore($attempts)
+  const gameIsOver = useStore($gameOver)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1 className='app__title'>React + effector memory card game</h1>
+      { !gameIsOver && <div className='app__counter'>Attempt counter: {attempts}</div> }
+      { !gameIsOver && <Playground /> }
+      { gameIsOver && <ScoreScreen /> }
     </div>
   );
 }
