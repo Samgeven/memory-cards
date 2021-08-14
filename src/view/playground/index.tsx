@@ -10,11 +10,11 @@ export const Playground = () => {
   const tuple = useStore($toggledTuple)
   const removedCards: number[] = useStore($removedCards)
 
-  const setCardClass = (index: number, value: number) => {
+  const isToggled = (index: number) => {
     if (index === tuple[0] || index === tuple[1]) {
-      return 'card card--toggled'
+      return true
     }
-    return 'card'
+    return false
   }
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export const Playground = () => {
               value={value} 
               index={index}
               key={index}
-              cardClass={setCardClass(index, value)}
+              isToggled={isToggled(index)}
               isRemoved={removedCards.includes(value)}
             />
           )

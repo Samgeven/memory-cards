@@ -26,6 +26,7 @@
 .card .card__img {
   opacity: 0;
   transition: 0.2s;
+  pointer-events: none;
 }
 
 .card--toggled .card__img {

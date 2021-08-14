@@ -29,7 +29,7 @@ let cardsListExtracted = $cardsList.getState()
 export const $toggledTupleValues = $toggledTuple.map(state => state.map(el => cardsListExtracted[el]))
 export const $removedCards: Store<removedCards> = domain.createStore(INIT_REMOVED_CARDS)
 export const $attempts: Store<number> = domain.createStore(0)
-export const $gameOver: Store<boolean> = $removedCards.map(store => store.length > 5)
+export const $gameOver: Store<boolean> = $removedCards.map(store => store.length > GAME_CONFIG.CARDS_QUANTITY / 2 - 1)
 
 $toggledTuple.on(toggle, (state, value) => [...state, value])
 $toggledTuple.on(resetTuple, () => [])
