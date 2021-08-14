@@ -30,7 +30,8 @@ export const Playground = () => {
           return (
             <Card 
               value={value} 
-              index={index} 
+              index={index}
+              key={index}
               cardClass={setCardClass(index, value)}
               isRemoved={removedCards.includes(value)}
             />

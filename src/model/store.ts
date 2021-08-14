@@ -1,23 +1,40 @@
 import { forward, Store } from 'effector'
 import { domain } from './domain'
 import { resetTuple, toggle, setRemovedCard, countAttempt, resetGame } from './events'
+import { GAME_CONFIG } from '../data'
 
 type toggledTuple = number[] | []
 type removedCards = number[] | []
 
-const INIT_CARDS_LIST = [0, 1, 6, 4, 1, 4, 0, 5, 3, 3, 5, 6]
+const INIT_CARDS_LIST = (quantity: number) => {
+  const lastCardValue = quantity / 2
+  let cardTuples: Array<number>[] = []
+  
+  for (let i = 0; i < lastCardValue; i++) {
+    const tuple = [i, i]
+    cardTuples = [...cardTuples, tuple]
+  }
+
+  return cardTuples.flat().sort(() => Math.random() - 0.5)
+}
+
 const INIT_TOGGLED_TUPLE: toggledTuple = []
 const INIT_REMOVED_CARDS: removedCards = []
 
-export const $cardsList: Store<number[]> = domain.createStore(INIT_CARDS_LIST)
+export const $cardsList: Store<number[]> = domain.createStore(INIT_CARDS_LIST(GAME_CONFIG.CARDS_QUANTITY))
 export const $toggledTuple: Store<toggledTuple> = domain.createStore(INIT_TOGGLED_TUPLE)
-export const $toggledTupleValues = $toggledTuple.map(state => state.map(el => INIT_CARDS_LIST[el]))
+
+let cardsListExtracted = $cardsList.getState()
+
+export const $toggledTupleValues = $toggledTuple.map(state => state.map(el => cardsListExtracted[el]))
 export const $removedCards: Store<removedCards> = domain.createStore(INIT_REMOVED_CARDS)
 export const $attempts: Store<number> = domain.createStore(0)
 export const $gameOver: Store<boolean> = $removedCards.map(store => store.length > 5)
 
 $toggledTuple.on(toggle, (state, value) => [...state, value])
 $toggledTuple.on(resetTuple, () => [])
+
+$cardsList.on(resetGame, (state) => state = INIT_CARDS_LIST(GAME_CONFIG.CARDS_QUANTITY))
 
 $removedCards.on(setRemovedCard, (state, value) => [...state, value])
 
@@ -36,3 +53,7 @@ forward({from: resetTuple, to: countAttempt})
 
 $removedCards.reset(resetGame)
 $attempts.reset(resetGame)
+
+resetGame.watch(() => {
+  cardsListExtracted = $cardsList.getState()
+})
