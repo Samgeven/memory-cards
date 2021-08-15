@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="app">
       <h1 className='app__title'>React + effector memory card game</h1>
-      { !gameIsOver && <div className='app__counter'>Attempt counter: {attempts}</div> }
+      { !gameIsOver && <div className='app__counter'>Attempts: {attempts}</div> }
       { !gameIsOver && <Playground /> }
       { gameIsOver && <ScoreScreen /> }
     </div>

@@ -12,3 +12,14 @@
 .app__counter {
   margin-bottom: 24px;
 }
+
+@media screen and (max-width: 768px) {
+  .app {
+    padding: 28px;
+  }
+
+  .app__title {
+    font-size: 24px;
+    margin-top: 0;
+  }
+}

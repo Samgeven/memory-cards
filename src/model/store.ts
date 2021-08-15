@@ -7,10 +7,10 @@ type toggledTuple = number[] | []
 type removedCards = number[] | []
 
 const INIT_CARDS_LIST = (quantity: number) => {
-  const lastCardValue = quantity / 2
+  const pairs = quantity / 2
   let cardTuples: Array<number>[] = []
   
-  for (let i = 0; i < lastCardValue; i++) {
+  for (let i = 0; i < pairs; i++) {
     const tuple = [i, i]
     cardTuples = [...cardTuples, tuple]
   }

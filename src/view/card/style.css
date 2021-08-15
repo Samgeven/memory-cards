@@ -33,3 +33,14 @@
   opacity: 1;
   transition: 0.2s;
 }
+
+@media screen and (max-width: 768px) {
+  .card {
+    margin-bottom: 16px;
+    min-height: 100px;
+  }
+
+  .card__img {
+    max-width: 60px;
+  }
+}
